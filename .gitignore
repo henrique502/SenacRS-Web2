@@ -1,0 +1,9 @@
+/build/
+
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+*.bak
+*.log
