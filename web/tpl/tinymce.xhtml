@@ -6,11 +6,7 @@
     <h:head>
         <ui:composition>
             <script type="text/javascript" src="#{request.contextPath}/resources/tinymce/tinymce.min.js"></script>
-        </ui:composition>
-    </h:head>
-    <h:body>
-        <ui:composition>
-            <script>
+            <script type="text/javascript">
                 $(function(){
                     tinyMCE.init({
                         resize: false,
@@ -27,6 +23,6 @@
                 });
             </script>
         </ui:composition>
-    </h:body>
+    </h:head>
 </html>
 
