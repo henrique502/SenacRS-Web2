@@ -1,6 +1,8 @@
 package br.com.hrdev;
 
 import br.com.hrdev.entidades.Usuario;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -49,5 +51,24 @@ public class Teste {
         }
         
         return usuario;
+    }
+    
+    public List<Usuario> selectAllUsuarios(){
+        connect();
+        List<Usuario> lista = new ArrayList<Usuario>();
+        
+        try {
+            manager.getTransaction().begin();
+            
+            lista = manager.createQuery("SELECT id, nome, email FROM usuarios ORDER BY nome ASC").getResultList();
+            
+            manager.getTransaction().commit();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            close();
+        }
+        
+        return lista;
     }
 }

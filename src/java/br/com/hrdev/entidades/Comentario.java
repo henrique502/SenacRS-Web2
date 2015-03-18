@@ -32,14 +32,14 @@ import javax.validation.constraints.Size;
 public class Comentario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
+    @Size(min = 1, max = 2147483647)
     @Column(name = "comentario")
     private String comentario;
     @Basic(optional = false)

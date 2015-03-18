@@ -6,7 +6,7 @@
 package br.com.hrdev.entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,7 +32,7 @@ import javax.validation.constraints.Size;
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -57,9 +57,9 @@ public class Usuario implements Serializable {
     @Column(name = "acessos")
     private boolean acessos;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private Collection<Comentario> comentarioCollection;
+    private List<Comentario> comentarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "autor")
-    private Collection<Post> postCollection;
+    private List<Post> postList;
 
     public Usuario() {
     }
@@ -116,20 +116,20 @@ public class Usuario implements Serializable {
         this.acessos = acessos;
     }
 
-    public Collection<Comentario> getComentarioCollection() {
-        return comentarioCollection;
+    public List<Comentario> getComentarioList() {
+        return comentarioList;
     }
 
-    public void setComentarioCollection(Collection<Comentario> comentarioCollection) {
-        this.comentarioCollection = comentarioCollection;
+    public void setComentarioList(List<Comentario> comentarioList) {
+        this.comentarioList = comentarioList;
     }
 
-    public Collection<Post> getPostCollection() {
-        return postCollection;
+    public List<Post> getPostList() {
+        return postList;
     }
 
-    public void setPostCollection(Collection<Post> postCollection) {
-        this.postCollection = postCollection;
+    public void setPostList(List<Post> postList) {
+        this.postList = postList;
     }
 
     @Override
