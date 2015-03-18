@@ -60,7 +60,7 @@ public class Teste {
         try {
             manager.getTransaction().begin();
             
-            lista = manager.createQuery("SELECT id, nome, email FROM usuarios ORDER BY nome ASC").getResultList();
+            lista = manager.createQuery("SELECT u FROM Usuario u ORDER BY u.nome ASC").getResultList();
             
             manager.getTransaction().commit();
         } catch(Exception e) {
