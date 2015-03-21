@@ -12,6 +12,7 @@ public class HomeModel extends Model {
     
     public List<Usuario> selectAllUsuarios(){
         List<Usuario> lista = new ArrayList<>();
+        connect();
         
         try {
             getEntityManager().getTransaction().begin();
@@ -21,6 +22,8 @@ public class HomeModel extends Model {
             getEntityManager().getTransaction().commit();
         } catch(Exception e) {
             System.out.println(e.getMessage());
+        } finally {
+            close();
         }
         
         return lista;

@@ -12,6 +12,7 @@ public class LoginModel extends Model {
     
     public Usuario getUsuarioByLogin(String email, String senha){
         Usuario usuario = null;
+        connect();
         
         try {
             
@@ -29,6 +30,8 @@ public class LoginModel extends Model {
             
         } catch(Exception e){
             e.printStackTrace();
+        } finally {
+            close();
         }
         
         return usuario;
