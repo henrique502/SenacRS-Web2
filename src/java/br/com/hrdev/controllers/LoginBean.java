@@ -57,19 +57,24 @@ public class LoginBean {
     }
     
     public String validaLogin(){
-        String emailParam = getEmail().toLowerCase().trim();
-        String senhaParam = HashHelper.md5(getSenha());
+        model.connect();
+        try {
+            String emailParam = getEmail().toLowerCase().trim();
+            String senhaParam = HashHelper.md5(getSenha());
 
-        Usuario usuario = model.getUsuarioByLogin(emailParam, senhaParam);
-        
-        if(usuario != null){
-            UsuarioBean bean = new UsuarioBean();
-            bean.login(usuario);
-            return "index";
-        } else {
-            setMessage("Login ou senha inválida. Tente novamente!");
+            Usuario usuario = model.getUsuarioByLogin(emailParam, senhaParam);
+
+            if(usuario != null){
+                UsuarioBean bean = new UsuarioBean();
+                bean.login(usuario);
+                return "index";
+            } else {
+                setMessage("Login ou senha inválida. Tente novamente!");
+            }
+
+            return "login";
+        } finally {
+            model.close();
         }
-        
-        return "login";
     }
 }
