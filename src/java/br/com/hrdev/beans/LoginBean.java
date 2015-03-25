@@ -1,0 +1,36 @@
+package br.com.hrdev.beans;
+
+import br.com.hrdev.entidades.Usuario;
+import br.com.hrdev.helpers.HashHelper;
+import br.com.hrdev.helpers.MensagensHelper;
+import br.com.hrdev.jpa.LoginModel;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+
+/**
+ *
+ * @author henriqueschmidt
+ */
+@ManagedBean
+@RequestScoped
+public class LoginBean {
+    LoginModel model;
+    
+    public LoginBean() {
+        model = new LoginModel();
+    }
+
+    public String validaLogin(Usuario u) {
+        Usuario usuario = model.getUsuarioByLogin(u.getEmail(), HashHelper.md5(u.getSenha()));
+
+        if (usuario != null) {
+            UsuarioBean bean = new UsuarioBean();
+            bean.login(usuario);
+            return "index";
+        } else {
+            MensagensHelper.addError(MensagensHelper.get("login_invalid"));
+        }
+
+        return "login";
+    }
+}

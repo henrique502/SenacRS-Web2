@@ -6,6 +6,8 @@
 package br.com.hrdev.entidades;
 
 import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,6 +27,8 @@ import javax.validation.constraints.Size;
  *
  * @author henriqueschmidt
  */
+@ManagedBean
+@RequestScoped
 @Entity
 @Table(name = "comentarios")
 @NamedQueries({

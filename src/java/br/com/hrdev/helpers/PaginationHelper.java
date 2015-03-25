@@ -9,11 +9,11 @@ import java.util.List;
  */
 public class PaginationHelper {
     
-    public Pagination get(int current_page, int counts){
+    public Pagination get(int current_page, Long counts){
         return get(3, 3, current_page, counts);
     }
     
-    public Pagination get(int size, int per_page, int current_page, int counts){
+    public Pagination get(int size, int per_page, int current_page, Long counts){
         Pagination p = new Pagination();
         
         p.current = current_page > 0 ? current_page : 1;
@@ -52,41 +52,20 @@ public class PaginationHelper {
             }
         }
         
-        config.numbers = (Integer[]) numbers.toArray();
+        Integer[] array = new Integer[numbers.size()];
+        for(i = 0; i < array.length; i++)
+            array[i] = numbers.get(i);
+
+        config.numbers = array;
     }
-    
-    private String buildLink(String url, String text){
-        return "<li><a href=\"" + url + "\">" + text + "</a>";
-    }
-    
-    public String getHtml(int current_page, int counts, String url){
-        return getHtml(3, 3, current_page, counts, url);
-    }
-    
-    public String getHtml(int size, int per_page, int current_page, int counts, String url){
-        Pagination config = get(size, per_page, current_page, counts);
-        
-        if(config.pages == 0) return "";
-        
-        String html = "<ul class=\"pagination\">";
-        
-        if(config.prev > 0)
-            html += buildLink(url + config.prev, "&laquo;");
-        
-        for(Integer i : config.getNumbers())
-            html += buildLink(url + i, i + "");
-        
-        if(config.next > 0)
-            html += buildLink(url + config.next, "&raquo;");
-        
-        return html += "</ul>";
-    }
-    
+
+    //@ManagedBean
+    //@RequestScoped
     public class Pagination {
         
-        private Pagination(){}
+        public Pagination(){}
         
-        private int counts = 0;
+        private Long counts = 0L;
         private int pages = 0;
         private int current = 0;
         private int per_page = 3;
@@ -94,7 +73,7 @@ public class PaginationHelper {
         private int prev = 0;
         private Integer[] numbers;
 
-        public int getCounts() {
+        public Long getCounts() {
             return counts;
         }
 
@@ -120,6 +99,11 @@ public class PaginationHelper {
 
         public Integer[] getNumbers() {
             return numbers;
+        }
+
+        @Override
+        public String toString() {
+            return "Pagination{" + "counts=" + counts + ", pages=" + pages + ", current=" + current + ", per_page=" + per_page + ", next=" + next + ", prev=" + prev + ", numbers=" + numbers + '}';
         }
     }
 }

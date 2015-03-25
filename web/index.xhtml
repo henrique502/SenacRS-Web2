@@ -3,41 +3,72 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>#{string.titulo}</title>
         
         <ui:insert name="header" >
             <ui:include src="tpl/header.xhtml" />
-        </ui:insert>
-        
-        <ui:insert name="header" >
-            <ui:include src="tpl/tinymce.xhtml" />
         </ui:insert>
     </h:head>
     
     <h:body>
         <div class="container">
-            <h:dataTable value="#{configBean.usuarios}" var="user" width="100%" styleClass="table" headerClass="table-header" footerClass="table-footer" rowClasses="table-odd-row,table-even-row" cellpadding="5" cellspacing="0">
-                <h:column>
-                    <f:facet name="header">Id</f:facet>
-                    #{user.id}
-                </h:column>
-                
-                <h:column>
-                    <f:facet name="header">Nome</f:facet>
-                    #{user.nome}
-                </h:column>
-                
-                <h:column>
-                    <f:facet name="header">E-mail</f:facet>
-                    #{user.email}
-                </h:column>
-            </h:dataTable>
+            <ui:insert name="content">
+                <ui:include src="tpl/menu.xhtml" />
+            </ui:insert>
             
-            <br /><br />
-            
-            <textarea class="textarea"></textarea>
+            <c:forEach items="#{homeBean.posts}" var="row">
+                
+                #{row.comentarios}<br />
+                
+            </c:forEach>
+
+            <!-- Pagination -->
+            <c:if test="#{homeBean.pagination.pages > 1}">
+                <ul class="pagination">
+                    <c:if test="#{homeBean.pagination.prev > 0}">
+                        <li>
+                            <h:link outcome="index">
+                                <f:param name="page" value="#{homeBean.pagination.prev}"/>
+                                <h:outputText value="&laquo;"/>
+                            </h:link>
+                        </li>
+                    </c:if>
+                    
+                    <c:forEach items="#{homeBean.pagination.numbers}" var="i">
+                        <c:choose>
+                            <c:when test="#{homeBean.pagination.current == i}">
+                                <li>
+                                    <h:link outcome="index" styleClass="active">
+                                        <f:param name="page" value="#{i}"/>
+                                        <h:outputText value="#{i}"/>
+                                    </h:link>
+                                </li>
+                            </c:when>
+                        
+                            <c:otherwise>
+                                <li>
+                                    <h:link outcome="index">
+                                        <f:param name="page" value="#{i}"/>
+                                        <h:outputText value="#{i}"/>
+                                    </h:link>
+                                </li>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
+                    
+                    <c:if test="#{homeBean.pagination.next > 0}">
+                        <li>
+                            <h:link outcome="index">
+                                <f:param name="page" value="#{homeBean.pagination.next}"/>
+                                <h:outputText value="&raquo;"/>
+                            </h:link>
+                        </li>
+                    </c:if>
+                </ul>
+            </c:if>
         </div>
     </h:body>
 </html>

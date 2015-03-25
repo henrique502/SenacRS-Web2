@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition>
+            <c:if test="#{pagination.pages > 1}">
+                <ul class="pagination">
+                    <c:if test="#{pagination.prev > 0}">
+                        <h:outputLink value="#{url}">
+                            <f:param name="page" value="#{pagination.prev}"/>
+                            <h:outputText value="&laquo;"/>
+                        </h:outputLink>
+                    </c:if>
+                    
+                    <c:forEach items="#{pagination.numbers}" var="i">
+                        <c:if test="#{pagination.current == i}">
+                            <h:outputLink value="#{url}" styleClass="active">
+                                <f:param name="page" value="#{i}"/>
+                                <h:outputText value="#{i}"/>
+                            </h:outputLink>
+                        </c:if>
+                        
+                        <c:otherwise>
+                            <h:outputLink value="#{url}">
+                                <f:param name="page" value="#{i}"/>
+                                <h:outputText value="#{i}"/>
+                            </h:outputLink>
+                        </c:otherwise>
+                    </c:forEach>
+                    
+                    <c:if test="#{pagination.next > 0}">
+                        <h:outputLink value="#{url}">
+                            <f:param name="page" value="#{pagination.next}"/>
+                            <h:outputText value="&raquo;"/>
+                        </h:outputLink>
+                    </c:if>
+                </ul>
+            </c:if>
+        </ui:composition>
+    </h:body>
+</html>
+

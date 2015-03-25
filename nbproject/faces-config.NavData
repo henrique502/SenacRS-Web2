@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="tpl/tinymce.xhtml" x="658" y="418" zoom="true"/>
+        <Node id="admin/index.xhtml" x="3" y="220" zoom="true"/>
+        <Node id="login.xhtml" x="0" y="15" zoom="true"/>
+        <Node id="post.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="admin/usuarios/remover.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="admin/usuarios/adicionar.xhtml" x="599" y="185" zoom="true"/>
+        <Node id="admin/usuarios/editar.xhtml" x="598" y="232" zoom="true"/>
+        <Node id="admin/posts/index.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="admin/posts/adicionar.xhtml" x="591" y="142" zoom="true"/>
+        <Node id="tpl/menu.xhtml" x="253" y="36" zoom="true"/>
+        <Node id="index.xhtml" x="311" y="159" zoom="true"/>
+        <Node id="admin/usuarios/index.xhtml" x="586" y="343" zoom="true"/>
+        <Node id="tpl/header.xhtml" x="357" y="353" zoom="true"/>
+        <Node id="admin/posts/editar.xhtml" x="601" y="90" zoom="true"/>
+        <Node id="tpl/footer.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="admin/posts/remover.xhtml" x="617" y="375" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

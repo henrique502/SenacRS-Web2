@@ -6,7 +6,7 @@
       xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Login</title>
+        <title>#{string.login_titulo}</title>
         
         <ui:insert name="header" >
             <ui:include src="tpl/header.xhtml" />
@@ -21,7 +21,7 @@
         
         <div class="container">
             
-            <h1 class="page-header text-center">Acesso Restrito</h1>
+            <h1 class="page-header text-center">#{string.login_titulo}</h1>
             
             <h:form id="login-form">
                 <div class="row">
@@ -31,22 +31,22 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4 col-md-offset-4 form-group">
-                        <label class="control-label">E-mail</label>
-                        <h:inputText class="form-control" maxlength="45" required="true" value="#{loginBean.email}" id="email" pt:type="email" pt:placeholder="Digite seu e-mail">
+                        <label class="control-label">#{string.login_input_email}</label>
+                        <h:inputText class="form-control" maxlength="45" required="true" value="#{usuario.email}" id="email" pt:type="email" pt:placeholder="#{string.login_input_placeholder_email}">
                             <f:validateLength minimum="5" maximum="45" />
 
                         </h:inputText>
                     </div>
                     <div class="col-md-4 col-md-offset-4 form-group">
-                        <label class="control-label">Senha</label>
-                        <h:inputSecret class="form-control" maxlength="16" required="true" value="#{loginBean.senha}" id="senha" pt:placeholder="Digite sua senha">
+                        <label class="control-label">#{string.login_input_senha}</label>
+                        <h:inputSecret class="form-control" maxlength="16" required="true" value="#{usuario.senha}" id="senha" pt:placeholder="#{string.login_input_placeholder_senha}">
                             <f:validateLength minimum="5" maximum="16" />
                         </h:inputSecret>
                     </div>
                     <br />
                     <div class="col-md-4 col-md-offset-4">
-                        <h:commandLink class="btn btn-success col-xs-12" action="#{loginBean.validaLogin}">
-                            <span class="glyphicon glyphicon-log-in"></span> Acessar
+                        <h:commandLink class="btn btn-success col-xs-12" action="#{loginBean.validaLogin(usuario)}">
+                            <span class="glyphicon glyphicon-log-in"></span> #{string.login_submit}
                         </h:commandLink>
                     </div>
                 </div>

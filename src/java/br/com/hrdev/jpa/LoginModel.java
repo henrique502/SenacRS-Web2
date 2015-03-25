@@ -10,12 +10,16 @@ import javax.persistence.Query;
  */
 public class LoginModel extends Model {
     
+    public LoginModel(){
+        super();
+    }
+    
     public Usuario getUsuarioByLogin(String email, String senha){
         Usuario usuario = null;
         
         try {
             
-            Query query = getEntityManager().createNamedQuery(Usuario.FIND_BY_EMAIL_SENHA);
+            Query query = db.createNamedQuery(Usuario.FIND_BY_EMAIL_SENHA);
             
             query.setParameter("email", email);
             query.setParameter("senha", senha);
