@@ -5,10 +5,8 @@ import br.com.hrdev.helpers.PaginationHelper;
 import br.com.hrdev.helpers.PaginationHelper.Pagination;
 import br.com.hrdev.jpa.HomeModel;
 import java.util.List;
-import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -20,36 +18,50 @@ import javax.faces.context.FacesContext;
 public class HomeBean {
     
     public static final int PER_PAGE = 3;
-    
     private HomeModel model;
-    private Map<String, String> params;
-    private static FacesContext context;
+    
+    private List<ViewPost> posts = null;
+    private Pagination pagination = null;
     
     public HomeBean(){
-        context = FacesContext.getCurrentInstance();
         model = new HomeModel();
-        params = context.getExternalContext().getRequestParameterMap();
+        
+        setup();
     }
     
-    private int getIndex(int page){
-        return (page - 1) * PER_PAGE;
+    private void setup(){
+        if(posts == null){
+            model.connect();
+            try {
+                Integer page = getPage();
+                posts = model.getPosts((page - 1) * PER_PAGE, PER_PAGE);
+                
+                Long total = model.getTotalPosts();
+                pagination = new PaginationHelper().get(PER_PAGE, page, total);
+            } finally {
+                model.close();
+            }
+        }
+        System.out.println(pagination);
     }
     
     private Integer getPage(){
+        Integer page = 1;
         try {
-            String p = params.get("page");
+            String p = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("page");
             if(p != null)
-                return Integer.parseInt(p);
+                page = Integer.parseInt(p);
         } catch(Exception e) {}
-        return 0;
+        if(page >= 1)
+            return page;
+        return 1;
     }
     
-    public List<ViewPost> getPosts() {
-        return model.getPosts((getPage() - 1) * PER_PAGE, PER_PAGE);
+    public List<ViewPost> getPosts(){
+        return posts;
     }
 
     public Pagination getPagination() {
-        Long total = model.getTotalPosts();
-        return new PaginationHelper().get(3, PER_PAGE, getPage(), total);
+        return pagination;
     }   
 }

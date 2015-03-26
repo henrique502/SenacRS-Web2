@@ -22,6 +22,7 @@ public class HomeModel extends Model {
             
             Query query = db.createQuery("SELECT COUNT(p.id) FROM Post p");
             total = (Long) query.getSingleResult();
+            System.out.println(total);
 
             db.getTransaction().commit();
         } catch (Exception e){

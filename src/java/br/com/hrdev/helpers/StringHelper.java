@@ -1,5 +1,7 @@
 package br.com.hrdev.helpers;
 
+import org.jsoup.Jsoup;
+
 /**
  *
  * @author henriqueschmidt
@@ -22,6 +24,6 @@ public class StringHelper {
     }
     
     public static String stripTags(String str){
-        
+        return Jsoup.parse(str).text();
     }
 }

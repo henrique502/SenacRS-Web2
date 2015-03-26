@@ -6,6 +6,7 @@
 package br.com.hrdev.entidades;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -23,6 +24,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -39,7 +42,7 @@ import javax.validation.constraints.Size;
 public class Post implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -57,7 +60,8 @@ public class Post implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "data")
-    private int data;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date data;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     private List<Comentario> comentarioList;
     @JoinColumn(name = "autor", referencedColumnName = "id")
@@ -71,7 +75,7 @@ public class Post implements Serializable {
         this.id = id;
     }
 
-    public Post(Integer id, String titulo, String conteudo, int data) {
+    public Post(Integer id, String titulo, String conteudo, Date data) {
         this.id = id;
         this.titulo = titulo;
         this.conteudo = conteudo;
@@ -102,11 +106,11 @@ public class Post implements Serializable {
         this.conteudo = conteudo;
     }
 
-    public int getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(int data) {
+    public void setData(Date data) {
         this.data = data;
     }
 

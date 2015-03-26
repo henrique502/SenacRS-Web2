@@ -6,6 +6,7 @@
 package br.com.hrdev.entidades;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.persistence.Basic;
@@ -20,6 +21,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -36,7 +39,7 @@ import javax.validation.constraints.Size;
 public class Comentario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
@@ -49,7 +52,8 @@ public class Comentario implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "data")
-    private int data;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date data;
     @JoinColumn(name = "usuario", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Usuario usuario;
@@ -64,7 +68,7 @@ public class Comentario implements Serializable {
         this.id = id;
     }
 
-    public Comentario(Integer id, String comentario, int data) {
+    public Comentario(Integer id, String comentario, Date data) {
         this.id = id;
         this.comentario = comentario;
         this.data = data;
@@ -86,11 +90,11 @@ public class Comentario implements Serializable {
         this.comentario = comentario;
     }
 
-    public int getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(int data) {
+    public void setData(Date data) {
         this.data = data;
     }
 

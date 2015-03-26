@@ -6,14 +6,12 @@ import javax.persistence.Persistence;
 
 public class Model {
     
-    public Model(){
-        connect();
-    }
+    public Model(){}
     
     private static EntityManagerFactory factory = null;
     protected static EntityManager db = null;
 
-    private void connect(){
+    public void connect(){
         if(factory == null){
             factory = Persistence.createEntityManagerFactory("SenacRS-Web2PU");
             db = factory.createEntityManager();
@@ -21,8 +19,14 @@ public class Model {
     }
     
     public void close(){
-        if(db != null) db.close();
-        if(factory != null) factory.close();
+        if(db != null){
+            db.close();
+            db = null;
+        }
+        if(factory != null){
+            factory.close();
+            factory = null;
+        }
     }
 }
 

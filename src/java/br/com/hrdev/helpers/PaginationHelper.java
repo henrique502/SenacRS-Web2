@@ -8,18 +8,17 @@ import java.util.List;
  * @author Henrique Rieger
  */
 public class PaginationHelper {
-    
-    public Pagination get(int current_page, Long counts){
-        return get(3, 3, current_page, counts);
-    }
-    
-    public Pagination get(int size, int per_page, int current_page, Long counts){
+
+    public Pagination get(int per_page, int current_page, Long counts){
         Pagination p = new Pagination();
+        int size = 3;
+        float c = counts;
+        float per = per_page;
         
         p.current = current_page > 0 ? current_page : 1;
         p.counts = counts;
         p.per_page = per_page;
-        p.pages = (int) Math.ceil(counts / per_page);
+        p.pages = (int) Math.ceil(c / per);
         
         parse(size, p);
         

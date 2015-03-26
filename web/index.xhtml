@@ -20,9 +20,24 @@
             </ui:insert>
             
             <c:forEach items="#{homeBean.posts}" var="row">
-                
-                #{row.comentarios}<br />
-                
+                <div class="jumbotron">
+                    <div class="row">
+                        <div class="col-xs-9">
+                            <h2>#{row.titulo}</h2>
+                        </div>
+                        <div class="col-xs-3 text-right">
+                            <small class="pull-right">
+                                #{row.dataFormatada} <i class="glyphicon glyphicon-calendar"></i><br />
+                                #{row.comentarios} <i class="glyphicon glyphicon-comment"></i>
+                            </small>
+                        </div>
+                    </div>
+                    <p>#{row.smallConteudo}...</p>
+                    <h:link outcome="post" styleClass="btn btn-primary pull-right">
+                        <f:param name="postId" value="#{row.id}"/>
+                        <i class="glyphicon glyphicon-plus"></i> Leia Mais
+                    </h:link>
+                </div>
             </c:forEach>
 
             <!-- Pagination -->
@@ -67,7 +82,7 @@
                             </h:link>
                         </li>
                     </c:if>
-                </ul>
+                </ul><br /><br />
             </c:if>
         </div>
     </h:body>

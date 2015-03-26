@@ -20,7 +20,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -33,55 +32,36 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
-    @NamedQuery(name = "Usuario.findByEmailSenha", query = "SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha")
-})
-
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
 public class Usuario implements Serializable {
-    
     private static final long serialVersionUID = 1L;
-    
-    /* Querys List */
-    @Transient
-    public static final String FIND_ALL = "Usuario.findAll";
-    
-    @Transient
-    public static final String FIND_BY_EMAIL_SENHA = "Usuario.findByEmailSenha";
-    
-    /* */
-    
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "nome")
     private String nome;
-    
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "email")
     private String email;
-    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 40)
     @Column(name = "senha")
     private String senha;
-    
     @Basic(optional = false)
     @NotNull
     @Column(name = "acessos")
     private boolean acessos;
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
     private List<Comentario> comentarioList;
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "autor")
     private List<Post> postList;
 

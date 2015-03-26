@@ -1,7 +1,6 @@
 package br.com.hrdev.jpa;
 
 import br.com.hrdev.entidades.Usuario;
-import java.util.List;
 import javax.persistence.Query;
 
 /**
@@ -10,24 +9,20 @@ import javax.persistence.Query;
  */
 public class LoginModel extends Model {
     
-    public LoginModel(){
-        super();
-    }
-    
     public Usuario getUsuarioByLogin(String email, String senha){
         Usuario usuario = null;
         
         try {
             
-            Query query = db.createNamedQuery(Usuario.FIND_BY_EMAIL_SENHA);
+            Query query = db.createQuery("SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha", Usuario.class);
             
             query.setParameter("email", email);
             query.setParameter("senha", senha);
             
-            List result = query.getResultList();
+            usuario = (Usuario) query.getSingleResult();
 
-            if(result.size() == 1)
-                usuario = (Usuario) result.get(0);
+            if(usuario == null)
+                return null;
             
         } catch(Exception e){
             e.printStackTrace();
