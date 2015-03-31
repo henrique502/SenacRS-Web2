@@ -23,12 +23,7 @@ public class SessionBean {
         this.usuario = usuario;
         this.logged = true;
     }
-    
-    public void logoff(){
-        this.usuario = null;
-        this.logged = false;
-    }
-    
+        
     public String getNome(){
         if(usuario == null) return "";
         return usuario.getNome();
@@ -46,5 +41,10 @@ public class SessionBean {
     public boolean isAdmin(){
         if(usuario == null) return false;
         return usuario.getAcessos();
+    }
+    
+    public void logoff(){
+        usuario = null;
+        logged = false;
     }
 }

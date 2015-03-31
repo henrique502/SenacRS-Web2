@@ -27,7 +27,10 @@
                         </div>
                         <div class="col-xs-3 text-right">
                             <small class="pull-right">
-                                #{row.dataFormatada} <i class="glyphicon glyphicon-calendar"></i><br />
+                                <h:outputText value="#{row.data}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                                <i class="glyphicon glyphicon-calendar"></i><br />
                                 #{row.comentarios} <i class="glyphicon glyphicon-comment"></i>
                             </small>
                         </div>

@@ -1,6 +1,6 @@
 package br.com.hrdev.beans;
 
-import br.com.hrdev.entidades.viwes.ViewPost;
+import br.com.hrdev.entidades.views.ViewPost;
 import br.com.hrdev.helpers.PaginationHelper;
 import br.com.hrdev.helpers.PaginationHelper.Pagination;
 import br.com.hrdev.jpa.HomeModel;
@@ -42,7 +42,6 @@ public class HomeBean {
                 model.close();
             }
         }
-        System.out.println(pagination);
     }
     
     private Integer getPage(){

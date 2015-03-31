@@ -39,15 +39,15 @@ public class LoginBean {
             session.setUsuario(usuario);
             
             if(usuario.getAcessos()){
-                return "admin/index";
+                return "/admin/index";
             } else {
-                return "index";
+                return "/index";
             }
         } else {
             MensagensHelper.addError(MensagensHelper.get("login_invalid"));
         }
 
-        return "login";
+        return "/login";
     }
 
     public SessionBean getSession() {

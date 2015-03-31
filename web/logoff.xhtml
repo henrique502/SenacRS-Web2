@@ -4,18 +4,35 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
-        <title>#{string.titulo}</title>
+        <title>#{string.login_titulo}</title>
+        
+        #{sessionBean.logoff()}
         
         <ui:insert name="header" >
             <ui:include src="tpl/header.xhtml" />
         </ui:insert>
     </h:head>
+
     <h:body>
-         <div class="container">
-            <ui:insert name="content">
-                <ui:include src="tpl/menu.xhtml" />
-            </ui:insert>
-         </div>
+
+        <ui:insert name="content" >
+            <ui:include src="tpl/menu.xhtml" />
+        </ui:insert>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="alert alert-info">Você saiu do sistema com sucesso.</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <h:link class="btn btn-success col-xs-12" outcome="/index">
+                        <span class="glyphicon glyphicon-arrow-left"></span> Voltar para o site
+                    </h:link>
+                </div>
+            </div>
+        </div>
     </h:body>
 </html>
 

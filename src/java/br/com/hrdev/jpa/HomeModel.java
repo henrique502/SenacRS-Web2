@@ -1,6 +1,6 @@
 package br.com.hrdev.jpa;
 
-import br.com.hrdev.entidades.viwes.ViewPost;
+import br.com.hrdev.entidades.views.ViewPost;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Query;
@@ -10,11 +10,7 @@ import javax.persistence.Query;
  * @author henriqueschmidt
  */
 public class HomeModel extends Model {
-    
-    public HomeModel(){
-        super();
-    }
-    
+
     public Long getTotalPosts(){
         Long total = 0L;
         try {
@@ -22,7 +18,6 @@ public class HomeModel extends Model {
             
             Query query = db.createQuery("SELECT COUNT(p.id) FROM Post p");
             total = (Long) query.getSingleResult();
-            System.out.println(total);
 
             db.getTransaction().commit();
         } catch (Exception e){

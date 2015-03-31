@@ -1,12 +1,111 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:body>
-        Hello from Facelets
+        <ui:composition template="/admin/tpl/template.xhtml">
+            <ui:define name="content">
+                <h4 class="page-header">Posts</h4>
+                <div class="row hidden-print">
+                    <div class="col-md-7">
+                        <div class="btn-group">
+                            <h:link outcome="/admin/posts/adicionar" styleClass="btn btn-default">
+                                <span class="glyphicon glyphicon-plus"></span> Cadastrar
+                            </h:link>
+                        </div>
+                    </div>
+                    <div class="col-md-1">&nbsp;</div>
+                    <div class="col-md-4"></div>
+                </div>
+                <br />
+
+                <h:dataTable value="#{adminPostsBean.postsLista}" var="p" styleClass="table table-striped table-bordered">
+                    <h:column>
+                        <f:facet name="header">Título</f:facet>
+                            #{p.titulo}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Autor</f:facet>
+                            #{p.autor.nome}
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">Criado em</f:facet>
+                        <h:outputText value="#{p.data}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Ações</f:facet>
+
+                        <h:link styleClass="btn btn-default" outcome="/admin/posts/editar">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            <f:param name="usuarioId" value="#{p.id}"/>
+                        </h:link>
+
+                        <h:link styleClass="btn btn-default" outcome="/admin/posts/remover">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            <f:param name="usuarioId" value="#{p.id}"/>
+                        </h:link>
+                    </h:column>
+
+                </h:dataTable>
+
+                <div class="row hidden-print">
+                    <div class="col-md-9">
+                        <!-- Pagination -->
+                        <c:if test="#{adminPostsBean.pagination.pages > 1}">
+                            <ul class="pagination">
+                                <c:if test="#{adminPostsBean.pagination.prev > 0}">
+                                    <li>
+                                        <h:link outcome="/admin/posts/index">
+                                            <f:param name="page" value="#{adminPostsBean.pagination.prev}"/>
+                                            <h:outputText value="&laquo;"/>
+                                        </h:link>
+                                    </li>
+                                </c:if>
+
+                                <c:forEach items="#{adminPostsBean.pagination.numbers}" var="i">
+                                    <c:choose>
+                                        <c:when test="#{adminUsuariosBean.pagination.current == i}">
+                                            <li>
+                                                <h:link outcome="/admin/posts/index" styleClass="active">
+                                                    <f:param name="page" value="#{i}"/>
+                                                    <h:outputText value="#{i}"/>
+                                                </h:link>
+                                            </li>
+                                        </c:when>
+
+                                        <c:otherwise>
+                                            <li>
+                                                <h:link outcome="/admin/posts/index">
+                                                    <f:param name="page" value="#{i}"/>
+                                                    <h:outputText value="#{i}"/>
+                                                </h:link>
+                                            </li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>
+
+                                <c:if test="#{adminPostsBean.pagination.next > 0}">
+                                    <li>
+                                        <h:link outcome="/admin/posts/index">
+                                            <f:param name="page" value="#{adminPostsBean.pagination.next}"/>
+                                            <h:outputText value="&raquo;"/>
+                                        </h:link>
+                                    </li>
+                                </c:if>
+                            </ul><br /><br />
+                        </c:if>
+                    </div>
+                    <div class="col-md-3 text-right">
+                        <p class="text-muted">#{adminPostsBean.postsTotal} Registros</p>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
-

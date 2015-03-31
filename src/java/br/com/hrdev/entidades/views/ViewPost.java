@@ -1,4 +1,4 @@
-package br.com.hrdev.entidades.viwes;
+package br.com.hrdev.entidades.views;
 
 import br.com.hrdev.helpers.StringHelper;
 import java.io.Serializable;
@@ -103,10 +103,6 @@ public class ViewPost implements Serializable {
 
     public void setComentarios(long comentarios) {
         this.comentarios = comentarios;
-    }
-    
-    public String getDataFormatada() {
-        return new SimpleDateFormat("dd/MM/yyyy").format(new Date(data.getTime()));
     }
     
     public String getSmallConteudo(){
