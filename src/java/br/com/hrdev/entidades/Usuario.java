@@ -158,7 +158,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "br.com.hrdev.entidades.Usuario[ id=" + id + " ]";
+        return this.nome;
     }
     
 }

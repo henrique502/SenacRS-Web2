@@ -1,6 +1,7 @@
 package br.com.hrdev.jpa.admin;
 
 import br.com.hrdev.entidades.Post;
+import br.com.hrdev.entidades.Usuario;
 import br.com.hrdev.jpa.Model;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,23 @@ public class AdminPostsModel extends Model {
             Query query = db.createQuery("SELECT p FROM Post p");
             query.setFirstResult(page);
             query.setMaxResults(per_page);
+            lista = query.getResultList();
+            
+            db.getTransaction().commit();
+        } catch (Exception e){
+            e.printStackTrace();
+            db.getTransaction().rollback();
+        }
+        return lista;
+    }
+    
+    public List<Usuario> getAutores() {
+        List<Usuario> lista = new ArrayList<>();
+        try {
+            db.getTransaction().begin();
+            
+            Query query = db.createQuery("SELECT u FROM Usuario u WHERE u.acessos = :acesso ORDER BY u.nome ASC");
+            query.setParameter("acesso", true);
             lista = query.getResultList();
             
             db.getTransaction().commit();

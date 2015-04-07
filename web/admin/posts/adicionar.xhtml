@@ -2,15 +2,32 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
         <ui:composition template="/admin/tpl/template.xhtml">
             <ui:define name="content">
-                
-                teste
-                
-                
-                
+                <h:form>
+                    <h:outputLabel for="titulo" value="Título do Post:" />
+                    <h:inputText id="titulo" value="#{post.titulo}" />
+                    
+                    <h:outputLabel for="conteudo" value="Conteúdo do Post:" />
+                    <h:inputTextarea id="conteudo" value="#{post.conteudo}" styleClass="textarea" />
+                    
+                    <h:outputLabel for="autor" value="Autor" />
+                    <!-- CONVERSOR http://stackoverflow.com/questions/9069379/validation-error-value-is-not-valid/9069660#9069660 !-->
+                    <h:selectOneMenu value="#{adminPostsAdicionarBean.autorSelecionado}" id="autor" >
+                        <f:selectItem itemValue="#{null}" itemLabel="-- Selecione um Autor --" />
+                        <f:selectItems value="#{adminPostsAdicionarBean.listaAutores}" />
+                    </h:selectOneMenu>
+                    
+                    <h:outputLabel for="data" value="Data do Post:" />
+                    <h:inputText id="data" value="#{post.data}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:inputText>
+                    
+                    <h:commandLink action="#{adminPostsAdicionarBean.adicionarPost(post)}">Criar Post</h:commandLink>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>

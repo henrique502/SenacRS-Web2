@@ -47,4 +47,8 @@ public class SessionBean {
         usuario = null;
         logged = false;
     }
+    
+    public Usuario getUsuario(){
+        return usuario;
+    }
 }
