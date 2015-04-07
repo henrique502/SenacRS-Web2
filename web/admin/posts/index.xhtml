@@ -20,6 +20,8 @@
                     <div class="col-md-1">&nbsp;</div>
                     <div class="col-md-4"></div>
                 </div>
+                
+                <h:messages class="alert alert-success" />
                 <br />
 
                 <h:dataTable value="#{adminPostsBean.postsLista}" var="p" styleClass="table table-striped table-bordered">
@@ -43,12 +45,12 @@
 
                         <h:link styleClass="btn btn-default" outcome="/admin/posts/editar">
                             <span class="glyphicon glyphicon-pencil"></span>
-                            <f:param name="usuarioId" value="#{p.id}"/>
+                            <f:param name="postId" value="#{p.id}"/>
                         </h:link>
 
                         <h:link styleClass="btn btn-default" outcome="/admin/posts/remover">
                             <span class="glyphicon glyphicon-trash"></span>
-                            <f:param name="usuarioId" value="#{p.id}"/>
+                            <f:param name="postId" value="#{p.id}"/>
                         </h:link>
                     </h:column>
 

@@ -45,4 +45,57 @@ public class AdminUsuariosModel extends Model {
         }
         return lista;
     }
+    
+    public boolean insertUsuario(Usuario usuario) {
+        try {
+            db.getTransaction().begin();
+            db.persist(usuario);
+            db.getTransaction().commit();
+        } catch (Exception e){
+            db.getTransaction().rollback();
+            throw e;
+        }
+        return true;
+    }
+
+    public Usuario getUsuarioById(Integer usuarioId) {
+        Usuario usuario = null;
+        try {
+            db.getTransaction().begin();
+            Query query = db.createQuery("SELECT p FROM Post p WHERE p.id = :usuarioId");
+            query.setMaxResults(1);
+            query.setParameter("usuarioId", usuarioId);
+            usuario = (Usuario) query.getSingleResult();
+            db.getTransaction().commit();
+        } catch (Exception e){
+            db.getTransaction().rollback();
+            throw e;
+        }
+        
+        return usuario;
+    }
+
+    public boolean updateUsuario(Usuario usuario) {
+        try {
+            db.getTransaction().begin();
+            db.merge(usuario);
+            db.getTransaction().commit();
+        } catch (Exception e){
+            db.getTransaction().rollback();
+            throw e;
+        }
+        return true;
+    }
+    
+    public boolean deleteUsuario(Usuario usuario) {
+        try {
+            db.getTransaction().begin();
+            db.remove(usuario);
+            db.getTransaction().commit();
+        } catch (Exception e){
+            db.getTransaction().rollback();
+            throw e;
+        }
+        return true;
+    }
 }

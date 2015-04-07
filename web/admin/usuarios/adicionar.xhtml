@@ -2,17 +2,67 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:body>
         <ui:composition template="/admin/tpl/template.xhtml">
             <ui:define name="content">
-                
-                teste
-                
-                
-                
+                <h4 class="page-header">Posts - <small>Adicionar</small></h4>
+                <div class="row hidden-print">
+                    <div class="col-md-12">
+                        <div class="btn-group">
+                            <h:link outcome="/admin/posts/index" styleClass="btn btn-default">
+                                <span class="glyphicon glyphicon-chevron-left"></span> Voltar
+                            </h:link>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <h:messages class="alert alert-danger" />
+                <h:form>
+                    <div class="row">
+                        <div class="col-md-12 col-md-offset-0">
+                            <div class="row">
+				<div class="col-md-12 form-group">
+                                    <h:outputLabel for="titulo" value="Título" />
+                                    <h:inputText id="titulo" value="#{post.titulo}" required="true" styleClass="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+				<div class="col-md-6 form-group">
+                                    <h:outputLabel for="autor" value="Autor" />
+                                    <h:selectOneMenu value="#{adminPostsAdicionarBean.autorSelecionado}" id="autor" converter="javax.faces.Integer" styleClass="form-control" required="true">
+                                        <f:selectItem itemValue="#{null}" itemLabel="-- Selecione um Autor --" />
+                                        <f:selectItems value="#{adminPostsAdicionarBean.listaAutores}" var="u" itemValue="#{u.id}" itemLabel="#{u.nome}" />
+                                    </h:selectOneMenu>
+                                </div>
+                                
+                                <div class="col-md-6 form-group">
+                                    <h:outputLabel for="data" value="Data" />
+                                    <h:inputText id="data" value="#{post.data}" styleClass="form-control" required="true">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:inputText>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+				<div class="col-md-12 form-group">
+                                    <h:inputTextarea id="conteudo" value="#{post.conteudo}" styleClass="textarea" />
+                                </div>
+                            </div>
+                            
+                            <div class="row hidden-print">
+				<div class="col-md-4 col-md-offset-8">
+                                    <h:commandLink action="#{adminPostsAdicionarBean.adicionarPost(post)}" styleClass="btn btn-success pull-right">
+                                        <span class="glyphicon glyphicon-ok"></span> Cadastrar
+                                    </h:commandLink>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>
 </html>
-

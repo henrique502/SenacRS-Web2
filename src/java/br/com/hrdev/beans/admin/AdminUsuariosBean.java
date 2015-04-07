@@ -1,10 +1,8 @@
 package br.com.hrdev.beans.admin;
 
-import static br.com.hrdev.beans.HomeBean.PER_PAGE;
 import br.com.hrdev.entidades.Usuario;
 import br.com.hrdev.helpers.PaginationHelper;
 import br.com.hrdev.jpa.admin.AdminUsuariosModel;
-import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -18,7 +16,7 @@ import javax.faces.context.FacesContext;
 @RequestScoped
 public class AdminUsuariosBean {
     
-    public final static int PER_PAGE = 15;
+    public final static int PER_PAGE = 10;
     
     private AdminUsuariosModel model;
     private List<Usuario> usuariosLista;

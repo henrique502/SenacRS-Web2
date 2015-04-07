@@ -3,6 +3,7 @@ package br.com.hrdev.beans.admin;
 import br.com.hrdev.beans.SessionBean;
 import br.com.hrdev.entidades.Post;
 import br.com.hrdev.entidades.Usuario;
+import br.com.hrdev.helpers.MensagensHelper;
 import br.com.hrdev.jpa.admin.AdminPostsModel;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
@@ -22,7 +23,7 @@ public class AdminPostsAdicionarBean {
 
     private List<Usuario> listaAutores;
     private AdminPostsModel model = null;
-    private Usuario autorSelecionado = null;
+    private Integer autorSelecionado = null;
 
     public AdminPostsAdicionarBean() {
         if (model == null) {
@@ -53,22 +54,35 @@ public class AdminPostsAdicionarBean {
         return listaAutores;
     }
     
-    public Usuario getAutorSelecionado() {
+    public Integer getAutorSelecionado() {
         if(autorSelecionado == null){
-            autorSelecionado = session.getUsuario();
+            autorSelecionado = session.getId();
         }
         return autorSelecionado;
     }
 
-    public void setAutorSelecionado(Usuario autorSelecionado) {
+    public void setAutorSelecionado(Integer autorSelecionado) {
         this.autorSelecionado = autorSelecionado;
     }
     
     public String adicionarPost(Post post){
-        System.out.println(post.getTitulo());
-        System.out.println(post.getData());
-        System.out.println(post.getConteudo());
-        System.out.println(getAutorSelecionado().getNome());
-        return "/admin/posts/adicionar";
+        post.setAutor(new Usuario(autorSelecionado));
+        boolean status = false;
+        model.connect();
+
+        try {
+            status = model.insertPost(post);
+        } catch(Exception e){
+            MensagensHelper.addError("Falha ou inserir o post: " + e.getMessage());
+        } finally {
+            model.close();
+        }
+        
+        if(status){
+            MensagensHelper.addInfo("Post inserido com sucesso");
+            return "/admin/posts/index";
+        } else {
+            return "/admin/posts/adicionar";
+        }
     }
 }

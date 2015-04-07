@@ -16,7 +16,7 @@ import javax.faces.context.FacesContext;
 @RequestScoped
 public class AdminPostsBean {
     
-    public final static int PER_PAGE = 3;
+    public final static int PER_PAGE = 10;
     
     private AdminPostsModel model;
     private List<Post> postLista;

@@ -34,7 +34,7 @@ public class AdminPostsModel extends Model {
         try {
             db.getTransaction().begin();
             
-            Query query = db.createQuery("SELECT p FROM Post p");
+            Query query = db.createQuery("SELECT p FROM Post p ORDER BY p.data DESC");
             query.setFirstResult(page);
             query.setMaxResults(per_page);
             lista = query.getResultList();
@@ -63,5 +63,58 @@ public class AdminPostsModel extends Model {
         }
         return lista;
     }
+
+    public boolean insertPost(Post post) {
+        try {
+            db.getTransaction().begin();
+            db.persist(post);
+            db.getTransaction().commit();
+        } catch (Exception e){
+            db.getTransaction().rollback();
+            throw e;
+        }
+        return true;
+    }
+
+    public Post getPostById(Integer postId) {
+        Post post = null;
+        try {
+            db.getTransaction().begin();
+            Query query = db.createQuery("SELECT p FROM Post p WHERE p.id = :postId");
+            query.setMaxResults(1);
+            query.setParameter("postId", postId);
+            post = (Post) query.getSingleResult();
+            db.getTransaction().commit();
+        } catch (Exception e){
+            db.getTransaction().rollback();
+            throw e;
+        }
+        
+        return post;
+    }
+
+    public boolean updatePost(Post post) {
+        try {
+            db.getTransaction().begin();
+            db.merge(post);
+            db.getTransaction().commit();
+        } catch (Exception e){
+            db.getTransaction().rollback();
+            throw e;
+        }
+        return true;
+    }
     
+    public boolean deletePost(Post post) {
+        try {
+            db.getTransaction().begin();
+            post = db.find(Post.class, post.getId());
+            db.remove(post);
+            db.getTransaction().commit();
+        } catch (Exception e){
+            db.getTransaction().rollback();
+            throw e;
+        }
+        return true;
+    }
 }
