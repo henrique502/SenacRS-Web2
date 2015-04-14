@@ -11,6 +11,11 @@ import javax.persistence.Query;
  * @author 180901954
  */
 public class AdminUsuariosModel extends Model {
+
+    public AdminUsuariosModel() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
     public Long getTotalUsuarios() {
         Long total = 0L;
