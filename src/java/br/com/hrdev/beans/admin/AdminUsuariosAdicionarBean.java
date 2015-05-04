@@ -23,7 +23,7 @@ public class AdminUsuariosAdicionarBean {
     }
     
     private void setup() {
-        //model = new AdminUsuariosModel();
+        model = new AdminUsuariosModel();
         model.connect();
 
         try {

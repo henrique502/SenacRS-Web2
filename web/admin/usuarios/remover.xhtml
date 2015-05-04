@@ -7,20 +7,20 @@
     <h:body>
         <ui:composition template="/admin/tpl/template.xhtml">
             <ui:define name="content">
-                <h4 class="page-header">Posts - <small>Remover</small></h4>
+                <h4 class="page-header">Usuário - <small>Remover</small></h4>
                 <h:form>
                     <div class="row">
                         <div class="col-md-6 col-md-offset-3">
                              <div class="callout callout-danger">
-                                 <h4>Remover Posts</h4>
-                                 <p>Tem certeza que quer remover o post <strong>#{adminPostsRemoverBean.post.titulo}</strong>?</p>
+                                 <h4>Remover Usuário</h4>
+                                 <p>Tem certeza que quer remover o usuário <strong>#{adminUsuariosRemoverBean.usuario.nome}</strong>?</p>
                                     <p>
                                         &nbsp;
-                                        <h:link outcome="/admin/posts/index" styleClass="btn btn-default col-md-3">
+                                        <h:link outcome="/admin/usuarios/index" styleClass="btn btn-default col-md-3">
                                             Cancelar
                                         </h:link>
-                                        <h:commandLink action="#{adminPostsRemoverBean.removerPost()}" styleClass="btn btn-danger col-md-3">
-                                            <f:param name="postId" value="#{adminPostsEditarBean.post.id}"/>
+                                        <h:commandLink action="#{adminUsuariosRemoverBean.removerUsuario()}" styleClass="btn btn-danger col-md-3">
+                                            <f:param name="usuarioId" value="#{adminUsuariosRemoverBean.usuario.id}"/>
                                             Sim
                                         </h:commandLink>
                                     </p>

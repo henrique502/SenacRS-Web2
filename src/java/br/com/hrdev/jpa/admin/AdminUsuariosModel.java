@@ -67,7 +67,7 @@ public class AdminUsuariosModel extends Model {
         Usuario usuario = null;
         try {
             db.getTransaction().begin();
-            Query query = db.createQuery("SELECT p FROM Post p WHERE p.id = :usuarioId");
+            Query query = db.createQuery("SELECT u FROM Usuario u WHERE u.id = :usuarioId", Usuario.class);
             query.setMaxResults(1);
             query.setParameter("usuarioId", usuarioId);
             usuario = (Usuario) query.getSingleResult();
@@ -95,6 +95,7 @@ public class AdminUsuariosModel extends Model {
     public boolean deleteUsuario(Usuario usuario) {
         try {
             db.getTransaction().begin();
+            usuario = db.find(Usuario.class, usuario.getId());
             db.remove(usuario);
             db.getTransaction().commit();
         } catch (Exception e){
