@@ -17,12 +17,18 @@ public class AdminUsuariosModel extends Model {
     }
 
     
-    public Long getTotalUsuarios() {
+    public Long getTotalUsuarios(String term) {
         Long total = 0L;
         try {
             db.getTransaction().begin();
             
-            Query query = db.createQuery("SELECT COUNT(u.id) FROM Usuario u");
+            Query query;
+            if(term.length() > 0){
+                query = db.createNamedQuery(Usuario.CountByNameOrEmail);
+                query.setParameter("term",  "%" + term.toLowerCase() + "%");
+            } else {
+                query = db.createNamedQuery(Usuario.CountAll);
+            }
             total = (Long) query.getSingleResult();
 
             db.getTransaction().commit();
@@ -33,12 +39,19 @@ public class AdminUsuariosModel extends Model {
         return total;
     }
     
-    public List<Usuario> getUsuarios(int page, int per_page) {
+    public List<Usuario> getUsuarios(int page, String term, int per_page) {
         List<Usuario> lista = new ArrayList<>();
         try {
             db.getTransaction().begin();
+            Query query;
             
-            Query query = db.createQuery("SELECT u FROM Usuario u");
+            if(term.length() > 0){
+                query = db.createNamedQuery(Usuario.FindByNameOrEmail);
+                query.setParameter("term", "%" + term.toLowerCase() + "%");
+            } else {
+                query = db.createNamedQuery(Usuario.FindAll);
+            }
+            
             query.setFirstResult(page);
             query.setMaxResults(per_page);
             lista = query.getResultList();

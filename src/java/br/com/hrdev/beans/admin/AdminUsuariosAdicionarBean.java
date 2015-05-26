@@ -51,6 +51,5 @@ public class AdminUsuariosAdicionarBean {
         } else {
             return "/admin/usuarios/adicionar";
         }
-    }
-    
+    }    
 }

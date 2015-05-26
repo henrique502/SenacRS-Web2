@@ -5,6 +5,7 @@
  */
 package br.com.hrdev.jpa;
 
+import br.com.hrdev.entidades.Comentario;
 import br.com.hrdev.entidades.Post;
 import static br.com.hrdev.jpa.Model.db;
 import javax.persistence.Query;
@@ -32,6 +33,24 @@ public class PostModel extends Model {
         }
 
         return post;
+    }
+    
+    public Comentario getComentariosByPost(Integer postId){
+        Comentario comentario = null;
+        
+        try {
+            Query query = db.createQuery("SELECT c FROM Comentario c WHERE p.id = :postId", Comentario.class);
+            query.setParameter("postId", postId);
+            comentario = (Comentario) query.getResultList();
+
+            if(comentario == null)
+                return null;
+            
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return comentario;
     }
     
 }

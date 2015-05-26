@@ -34,6 +34,28 @@
                 </div>
                 <h:outputText value="#{post.conteudo}" escape="false"/>
              </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-6 thumbnail">
+                    <h3>Inserir - <small>comentário</small></h3>
+                    <h:form>
+                        <h:inputTextarea class="col-md-12 form-control" rows="5" value="#{comentario.comentario}"></h:inputTextarea>
+                        <h:commandLink action="#{postBean.setComentario(comentario)}" styleClass="btn btn-success pull-right">
+                            <f:param name="postId" value="#{post.id}"/>
+                            <span class="glyphicon glyphicon-ok"></span> Enviar Comentário
+                        </h:commandLink>
+                    </h:form>
+                </div>
+            </div>
+            <div class="row">
+                <h3>Comentários</h3>
+                <ui:repeat value="#{postBean.comentarios}" var="c">
+                    <div class="col-md-6 form-group">
+                        <h:outputLabel value="#{c.usuario}" />
+                        <h:outputLabel value="#{c.comentario}" />
+                        <h:outputLabel value="#{c.data}" />
+                    </div>
+                </ui:repeat>
+            </div>
          </div>
     </h:body>
 </html>

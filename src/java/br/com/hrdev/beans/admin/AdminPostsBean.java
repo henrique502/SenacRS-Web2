@@ -22,6 +22,7 @@ public class AdminPostsBean {
     private List<Post> postLista;
     private Long postTotal;
     private PaginationHelper.Pagination pagination;
+    private String term;
 
     public AdminPostsBean() {
         if (model == null) {
@@ -54,19 +55,37 @@ public class AdminPostsBean {
         }
         return 1;
     }
+    
+    private String getParamTerm() {
+        try {
+            String t = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("term");
+            if (t != null) {
+                return t;
+            }
+        } catch (Exception e) {}
+        return "";
+    }
 
     private void setup() {
         model = new AdminPostsModel();
         model.connect();
         try {
+            term = getParamTerm();
             Integer page = getPage();
-            postLista = model.getPosts((page - 1) * PER_PAGE, PER_PAGE);
+            postLista = model.getPosts((page - 1) * PER_PAGE, term, PER_PAGE);
 
-            postTotal = model.getTotalPosts();
+            postTotal = model.getTotalPosts(term);
             pagination = new PaginationHelper().get(PER_PAGE, page, postTotal);
         } finally {
             model.close();
         }
     }
     
+    public String getTerm() {
+        return term;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
+    }
 }

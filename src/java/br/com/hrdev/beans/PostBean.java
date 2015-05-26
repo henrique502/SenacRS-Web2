@@ -19,6 +19,7 @@ public class PostBean {
     
     private PostModel model;
     private Post post = null;
+    private ArrayList<Comentario> listaComentario;
     
     public PostBean() {
         model = new PostModel();
@@ -30,6 +31,7 @@ public class PostBean {
             try {
                 model.connect();
                 post = model.getPostById(getPostId());
+                listaComentario = new ArrayList<Comentario>();
             } finally {
                 model.close();
             }
@@ -53,6 +55,10 @@ public class PostBean {
     }
     
     public List<Comentario> getComentarios(){
-        return new ArrayList<Comentario>();
+        return listaComentario;
+    }
+    
+    public void setComentario(Comentario comentario){
+        listaComentario.add(comentario);
     }
 }

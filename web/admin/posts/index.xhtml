@@ -19,6 +19,19 @@
                     </div>
                     <div class="col-md-1">&nbsp;</div>
                     <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <form method="get" action="?">
+                            <input type="hidden" name="page" value="0" />
+                            <div class="input-group">
+                                <input value="#{adminPostBean.term}" name="term" placeholder="Procurar..." class="form-control" type="text" />
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-default">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 
                 <h:messages class="alert alert-success" />

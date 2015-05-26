@@ -13,12 +13,19 @@ import javax.persistence.Query;
  */
 public class AdminPostsModel extends Model {
     
-    public Long getTotalPosts() {
+    public Long getTotalPosts(String term) {
         Long total = 0L;
         try {
             db.getTransaction().begin();
             
-            Query query = db.createQuery("SELECT COUNT(p.id) FROM Post p");
+            Query query;
+            if(term.length() > 0){
+                query = db.createNamedQuery(Post.FindByTitulo);
+                query.setParameter("term", "%" + term.toLowerCase() + "%");
+            } else {
+                query = db.createNamedQuery(Post.FindAll);
+            }
+            
             total = (Long) query.getSingleResult();
 
             db.getTransaction().commit();
@@ -29,12 +36,19 @@ public class AdminPostsModel extends Model {
         return total;
     }
     
-    public List<Post> getPosts(int page, int per_page) {
+    public List<Post> getPosts(int page, String term, int per_page) {
         List<Post> lista = new ArrayList<>();
         try {
             db.getTransaction().begin();
             
-            Query query = db.createQuery("SELECT p FROM Post p ORDER BY p.data DESC");
+            Query query;
+            if(term.length() > 0){
+                query = db.createNamedQuery(Post.FindByTitulo);
+                query.setParameter("term", "%" + term.toLowerCase() + "%");
+            } else {
+                query = db.createNamedQuery(Post.FindAll);
+            }
+
             query.setFirstResult(page);
             query.setMaxResults(per_page);
             lista = query.getResultList();

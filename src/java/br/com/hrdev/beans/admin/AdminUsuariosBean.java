@@ -20,6 +20,7 @@ public class AdminUsuariosBean {
     
     private AdminUsuariosModel model;
     private List<Usuario> usuariosLista;
+    private String term;
     private Long usuariosTotal;
     private PaginationHelper.Pagination pagination;
 
@@ -54,18 +55,37 @@ public class AdminUsuariosBean {
         }
         return 1;
     }
+    
+     private String getParamTerm() {
+        try {
+            String t = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("term");
+            if (t != null) {
+                return t;
+            }
+        } catch (Exception e) {}
+        return "";
+    }
 
     private void setup() {
         model = new AdminUsuariosModel();
         model.connect();
         try {
+            term = getParamTerm();
             Integer page = getPage();
-            usuariosLista = model.getUsuarios((page - 1) * PER_PAGE, PER_PAGE);
+            usuariosLista = model.getUsuarios((page - 1) * PER_PAGE, term, PER_PAGE);
 
-            usuariosTotal = model.getTotalUsuarios();
+            usuariosTotal = model.getTotalUsuarios(term);
             pagination = new PaginationHelper().get(PER_PAGE, page, usuariosTotal);
         } finally {
             model.close();
         }
+    }
+    
+    public String getTerm() {
+        return term;
+    }
+
+    public void setTerm(String term) {
+        this.term = term;
     }
 }
