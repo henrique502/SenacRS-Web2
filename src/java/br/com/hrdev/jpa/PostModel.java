@@ -7,7 +7,10 @@ package br.com.hrdev.jpa;
 
 import br.com.hrdev.entidades.Comentario;
 import br.com.hrdev.entidades.Post;
+import br.com.hrdev.entidades.Usuario;
 import static br.com.hrdev.jpa.Model.db;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Query;
 
 /**
@@ -21,13 +24,9 @@ public class PostModel extends Model {
         Post post = null;
         
         try {
-            Query query = db.createQuery("SELECT p FROM Post p WHERE p.id = :postId", Post.class);
+            Query query = db.createNamedQuery(Post.GetPostById);
             query.setParameter("postId", postId);
             post = (Post) query.getSingleResult();
-
-            if(post == null)
-                return null;
-            
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -35,22 +34,32 @@ public class PostModel extends Model {
         return post;
     }
     
-    public Comentario getComentariosByPost(Integer postId){
-        Comentario comentario = null;
-        
+    public List<Comentario> getComentariosByPost(Integer postId) {
+        List<Comentario> lista = new ArrayList<>();
         try {
-            Query query = db.createQuery("SELECT c FROM Comentario c WHERE p.id = :postId", Comentario.class);
-            query.setParameter("postId", postId);
-            comentario = (Comentario) query.getResultList();
-
-            if(comentario == null)
-                return null;
+            db.getTransaction().begin();
             
-        } catch(Exception e){
+            Query query = db.createNamedQuery(Comentario.GetAllByPost);
+            query.setParameter("postId", postId);
+            lista = query.getResultList();
+            
+            db.getTransaction().commit();
+        } catch (Exception e){
             e.printStackTrace();
+            db.getTransaction().rollback();
         }
+        return lista;
+    }
 
-        return comentario;
+    public void saveComentario(Comentario comentario) {
+        try {
+            db.getTransaction().begin();
+            db.persist(comentario);
+            db.getTransaction().commit();
+        } catch (Exception e){
+            db.getTransaction().rollback();
+            throw e;
+        }
     }
     
 }

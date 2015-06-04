@@ -35,9 +35,14 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "comentarios")
 @NamedQueries({
-    @NamedQuery(name = "Comentario.findAll", query = "SELECT c FROM Comentario c")})
+    @NamedQuery(name = "Comentario.findAll", query = "SELECT c FROM Comentario c"),
+    @NamedQuery(name = "Comentario.getAllByPost", query = "SELECT c FROM Comentario c WHERE c.post.id = :postId ORDER BY c.data DESC")
+})
 public class Comentario implements Serializable {
     private static final long serialVersionUID = 1L;
+    
+    public static final String GetAllByPost = "Comentario.getAllByPost";
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

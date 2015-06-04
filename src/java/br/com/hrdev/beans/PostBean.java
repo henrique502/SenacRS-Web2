@@ -2,10 +2,12 @@ package br.com.hrdev.beans;
 
 import br.com.hrdev.entidades.Comentario;
 import br.com.hrdev.entidades.Post;
+import br.com.hrdev.helpers.MensagensHelper;
 import br.com.hrdev.jpa.PostModel;
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
@@ -19,7 +21,10 @@ public class PostBean {
     
     private PostModel model;
     private Post post = null;
-    private ArrayList<Comentario> listaComentario;
+    private List<Comentario> listaComentario;
+    
+    @ManagedProperty(value="#{sessionBean}")
+    private SessionBean session;
     
     public PostBean() {
         model = new PostModel();
@@ -31,7 +36,8 @@ public class PostBean {
             try {
                 model.connect();
                 post = model.getPostById(getPostId());
-                listaComentario = new ArrayList<Comentario>();
+                listaComentario = model.getComentariosByPost(post.getId());
+                System.err.println(post.getId());
             } finally {
                 model.close();
             }
@@ -58,7 +64,36 @@ public class PostBean {
         return listaComentario;
     }
     
-    public void setComentario(Comentario comentario){
-        listaComentario.add(comentario);
+    public String setComentario(Comentario comentario){
+        Integer postId = getPostId();
+        if(postId <= 0) return null;
+        
+        if(session.isLogged()){
+            System.out.println(comentario.getComentario());
+            
+            comentario.setData(new Date());
+            comentario.setPost(getPost());
+            comentario.setUsuario(session.getUsuario());
+            
+            try {
+                model.connect();
+                model.saveComentario(comentario);
+                MensagensHelper.addInfo("Comentário feito com sucesso");
+            } finally {
+                model.close();
+            }
+        } else {
+            MensagensHelper.addError("Você não esta logado!");
+        }
+
+        return "/post?faces-redirect=true&postId=" + getPostId();
+    }
+    
+    public SessionBean getSession() {
+        return session;
+    }
+
+    public void setSession(SessionBean session) {
+        this.session = session;
     }
 }

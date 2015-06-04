@@ -3,11 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <ui:param name="post" value="#{postBean.post}" />
         <title>#{post.titulo} - #{string.titulo}</title>
-        
+
         <ui:insert name="header" >
             <ui:include src="tpl/header.xhtml" />
         </ui:insert>
@@ -17,7 +18,7 @@
             <ui:insert name="content">
                 <ui:include src="tpl/menu.xhtml" />
             </ui:insert>
-            
+
             <div class="jumbotron">
                 <div class="row">
                     <div class="col-xs-9">
@@ -33,30 +34,47 @@
                     </div>
                 </div>
                 <h:outputText value="#{post.conteudo}" escape="false"/>
-             </div>
+            </div>
+            <c:if test="#{sessionBean.logged}">
+                <div class="row">
+                    <div class="col-xs-12 col-md-6 thumbnail">
+                        <h:messages errorClass="alert alert-danger" infoClass="alert alert-success" />
+                        <h3>Inserir - <small>comentário</small></h3>
+                        <h:form>
+                            <h:inputTextarea class="col-md-12 form-control" rows="5" value="#{comentario.comentario}"></h:inputTextarea>
+                            <h:commandLink action="#{postBean.setComentario(comentario)}" styleClass="btn btn-success pull-right">
+                                <f:param name="postId" value="#{post.id}"/>
+                                <span class="glyphicon glyphicon-ok"></span> Enviar Comentário
+                            </h:commandLink>
+                        </h:form>
+                    </div>
+                </div>
+            </c:if>
             <div class="row">
-                <div class="col-xs-12 col-md-6 thumbnail">
-                    <h3>Inserir - <small>comentário</small></h3>
-                    <h:form>
-                        <h:inputTextarea class="col-md-12 form-control" rows="5" value="#{comentario.comentario}"></h:inputTextarea>
-                        <h:commandLink action="#{postBean.setComentario(comentario)}" styleClass="btn btn-success pull-right">
-                            <f:param name="postId" value="#{post.id}"/>
-                            <span class="glyphicon glyphicon-ok"></span> Enviar Comentário
-                        </h:commandLink>
-                    </h:form>
+                <div class="col-xs-12 col-md-6">
+                    <h3>Comentários</h3>
+                    <c:forEach var="c" items="#{postBean.comentarios}">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <h:outputLabel value="#{c.usuario.nome}" />
+                                        <span class="col-xs-3 pull-right text-muted">
+                                            <h:outputText value="#{c.data}">
+                                                <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                                            </h:outputText>
+                                        </span>
+                                    </h3>
+                                </div>
+                                <div class="panel-body">
+                                    <h:outputLabel value="#{c.comentario}" />
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
-            <div class="row">
-                <h3>Comentários</h3>
-                <ui:repeat value="#{postBean.comentarios}" var="c">
-                    <div class="col-md-6 form-group">
-                        <h:outputLabel value="#{c.usuario}" />
-                        <h:outputLabel value="#{c.comentario}" />
-                        <h:outputLabel value="#{c.data}" />
-                    </div>
-                </ui:repeat>
-            </div>
-         </div>
+        </div>
     </h:body>
 </html>
 

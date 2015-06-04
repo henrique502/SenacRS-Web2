@@ -32,9 +32,22 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
+    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
+    @NamedQuery(name = "Usuario.findByNameOrEmail", query = "SELECT u FROM Usuario u WHERE " +
+                "(lower(u.nome) like :term OR lower(u.email) like :term)"),
+    
+    @NamedQuery(name = "Usuario.countAll", query = "SELECT COUNT(u.id) FROM Usuario u"),
+    @NamedQuery(name = "Usuario.countByNameOrEmail", query = "SELECT COUNT(u.id) FROM Usuario u WHERE " +
+                "(lower(u.nome) like :term OR lower(u.email) like :term)"),
+})
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
+    
+    public static final String FindAll = "Usuario.findAll";
+    public static final String FindByNameOrEmail = "Usuario.findByNameOrEmail";
+    public static final String CountAll = "Usuario.countAll";
+    public static final String CountByNameOrEmail = "Usuario.countByNameOrEmail";
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

@@ -38,9 +38,21 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "posts")
 @NamedQueries({
-    @NamedQuery(name = "Post.findAll", query = "SELECT p FROM Post p")})
+    @NamedQuery(name = "Post.findAll", query = "SELECT p FROM Post p ORDER BY p.data DESC"),
+    @NamedQuery(name = "Post.findByTitulo", query = "SELECT p FROM Post p WHERE (lower(p.titulo) like :term) ORDER BY p.data DESC"),
+    @NamedQuery(name = "Post.countAll", query = "SELECT COUNT(p.id) FROM Post p"),
+    @NamedQuery(name = "Post.countByTitulo", query = "SELECT COUNT(p.id) FROM Post p WHERE (lower(p.titulo) like :term)"),
+    @NamedQuery(name = "Post.getPostById", query = "SELECT p FROM Post p WHERE p.id = :postId")
+})
 public class Post implements Serializable {
     private static final long serialVersionUID = 1L;
+    
+    public static final String FindAll = "Post.findAll";
+    public static final String FindByTitulo = "Post.findByTitulo";
+    public static final String CountAll = "Post.countAll";
+    public static final String CountTitulo = "Post.countByTitulo";
+    public static final String GetPostById = "Post.getPostById";
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)

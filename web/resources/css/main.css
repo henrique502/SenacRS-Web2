@@ -47,6 +47,9 @@ ul.alert { list-style-type: none; }
 
 .jumbotron h2 { margin: 0 0 15px 0; padding: 0; }
 
+.panel .panel-heading span { white-space: nowrap; display: block; margin-right: 10px; margin-top: 2px; }
+.alert { list-style: none !important; }
+
 @media print {
     body { padding: 0; }
 }
