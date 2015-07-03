@@ -25,6 +25,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Type;
 
 /**
  *
@@ -34,6 +39,8 @@ import javax.validation.constraints.Size;
 @RequestScoped
 @Entity
 @Table(name = "comentarios")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @NamedQueries({
     @NamedQuery(name = "Comentario.findAll", query = "SELECT c FROM Comentario c"),
     @NamedQuery(name = "Comentario.getAllByPost", query = "SELECT c FROM Comentario c WHERE c.post.id = :postId ORDER BY c.data DESC")
@@ -47,23 +54,32 @@ public class Comentario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
+    @XmlElement
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Lob
     @Size(min = 1, max = 2147483647)
     @Column(name = "comentario")
+    @XmlElement
     private String comentario;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "data")
     @Temporal(TemporalType.TIMESTAMP)
+    @XmlElement
     private Date data;
+    
     @JoinColumn(name = "usuario", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @XmlElement
     private Usuario usuario;
+    
     @JoinColumn(name = "post", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @XmlElement
     private Post post;
 
     public Comentario() {

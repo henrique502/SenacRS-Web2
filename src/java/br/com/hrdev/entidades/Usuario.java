@@ -22,6 +22,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Type;
 
 /**
  *
@@ -31,6 +36,8 @@ import javax.validation.constraints.Size;
 @RequestScoped
 @Entity
 @Table(name = "usuarios")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
     @NamedQuery(name = "Usuario.findByNameOrEmail", query = "SELECT u FROM Usuario u WHERE " +
@@ -52,30 +59,42 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
+    @XmlElement
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "nome")
+    @XmlElement
     private String nome;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "email")
+    @XmlElement
     private String email;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 40)
+    @XmlElement
     @Column(name = "senha")
+   
     private String senha;
     @Basic(optional = false)
     @NotNull
     @Column(name = "acessos")
+    @XmlElement
     private boolean acessos;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    @XmlElement
     private List<Comentario> comentarioList;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "autor")
+    @XmlElement
     private List<Post> postList;
 
     public Usuario() {

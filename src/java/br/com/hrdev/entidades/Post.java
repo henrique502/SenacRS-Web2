@@ -28,6 +28,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.annotations.Type;
 
 /**
  *
@@ -37,6 +42,8 @@ import javax.validation.constraints.Size;
 @RequestScoped
 @Entity
 @Table(name = "posts")
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 @NamedQueries({
     @NamedQuery(name = "Post.findAll", query = "SELECT p FROM Post p ORDER BY p.data DESC"),
     @NamedQuery(name = "Post.findByTitulo", query = "SELECT p FROM Post p WHERE (lower(p.titulo) like :term) ORDER BY p.data DESC"),
@@ -57,27 +64,38 @@ public class Post implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
+    @XmlElement
     private Integer id;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 120)
     @Column(name = "titulo")
+    @XmlElement
     private String titulo;
+    
     @Basic(optional = false)
     @NotNull
     @Lob
     @Size(min = 1, max = 2147483647)
     @Column(name = "conteudo")
+    @XmlElement
     private String conteudo;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "data")
     @Temporal(TemporalType.TIMESTAMP)
+    @XmlElement
     private Date data;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+    @XmlElement
     private List<Comentario> comentarioList;
+    
     @JoinColumn(name = "autor", referencedColumnName = "id")
     @ManyToOne(optional = false)
+    @XmlElement
     private Usuario autor;
 
     public Post() {

@@ -2,7 +2,6 @@ package br.com.hrdev.entidades.views;
 
 import br.com.hrdev.helpers.StringHelper;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -14,6 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -21,6 +21,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "view_posts")
+@XmlRootElement
 public class ViewPost implements Serializable {
     @Basic(optional = false)
     @NotNull
@@ -34,7 +35,7 @@ public class ViewPost implements Serializable {
     @NotNull
     @Column(name = "id")
     @Id
-    private int id;
+    private Integer id;
     
     @Basic(optional = false)
     @NotNull
@@ -68,7 +69,7 @@ public class ViewPost implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
